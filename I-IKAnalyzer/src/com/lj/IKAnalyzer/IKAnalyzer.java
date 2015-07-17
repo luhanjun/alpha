@@ -15,6 +15,8 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.FieldCache;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
@@ -23,15 +25,14 @@ import org.apache.lucene.util.Version;
 public class IKAnalyzer {
 	/**
 	 * 分词
-	 * @param word 需分词的文本
 	 * @return
 	 */
-	public String analyzer(String word){
+	public String analyzer(){
 		String name="text";
 		String text="IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 		//步骤一：获取分词器
 		//档内容进行分词处理，这部分工作就是由 Analyzer 来做的。Analyzer 类是一个抽象类，它有多个实现。针对不同的语言和应用需要选择适合的 Analyzer。Analyzer 把分词后的内容交给 IndexWriter 来建立索引
-		Analyzer analyzer= new  org.wltea.analyzer.lucene.IKAnalyzer() ; 
+		Analyzer analyzer= new  org.wltea.analyzer.lucene.IKAnalyzer(true) ; 
 		Directory directory=null;
 		//IndexWriter 是 Lucene 用来创建索引的一个核心的类，他的作用是把一个个的 Document 对象加到索引中来
 		IndexWriter iwriter=null;
@@ -78,21 +79,41 @@ public class IKAnalyzer {
 			//这是一个抽象类，他有多个实现，比如 TermQuery, BooleanQuery, PrefixQuery. 这个类的目的是把用户输入的查询字符串封装成 Lucene 能够识别的 Query。
 			Query query=qp.parse(keyword);
 			
+			//搜索相似度最高的5条记录
+			TopDocs topDocs=isearcher.search(query, 5);
+			
+			System.out.println("命中:"+topDocs.totalHits);
+			
+			//输出结果 
+			ScoreDoc[] scoreDocs = topDocs.scoreDocs; 
+			for (int i = 0; i < topDocs.totalHits; i++)
+			{ 
+				Document targetDoc = isearcher.doc(scoreDocs[i].doc); 
+				System.out.println("内容：" + targetDoc.toString()); 
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{ 
+			if(ireader != null)
+			{ 
+				try { 
+					ireader.close(); 
+				} catch (IOException e) { 
+					e.printStackTrace(); 
+				} 
+			} 
+			if(directory != null){ 
+				try { 
+					directory.close(); 
+				} catch (IOException e) {
+					e.printStackTrace(); 
+				} 
+			}		
 		}
-				
-		
-		
-		
-		
-		
-		
-		
-		
 		return null;
 	}
 
