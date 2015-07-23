@@ -2,8 +2,11 @@ package com.lj.IKAnalyzer;
 
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -26,13 +29,24 @@ public class IKAnalyzer {
 	/**
 	 * 分词
 	 * @return
+	 * @throws IOException 
 	 */
-	public String analyzer(){
+	public String analyzer() throws IOException{
 		String name="text";
 		String text="IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 		//步骤一：获取分词器
 		//档内容进行分词处理，这部分工作就是由 Analyzer 来做的。Analyzer 类是一个抽象类，它有多个实现。针对不同的语言和应用需要选择适合的 Analyzer。Analyzer 把分词后的内容交给 IndexWriter 来建立索引
 		Analyzer analyzer= new  org.wltea.analyzer.lucene.IKAnalyzer(true) ; 
+		StringReader reader=new StringReader(text);  
+        //分词  
+        TokenStream ts=analyzer.tokenStream("", reader);  
+        CharTermAttribute term=ts.getAttribute(CharTermAttribute.class);  
+        //遍历分词数据  
+        while(ts.incrementToken()){  
+            System.out.print(term.toString()+"|");  
+        }  
+        reader.close();  
+        System.out.println(); 
 		Directory directory=null;
 		//IndexWriter 是 Lucene 用来创建索引的一个核心的类，他的作用是把一个个的 Document 对象加到索引中来
 		IndexWriter iwriter=null;
