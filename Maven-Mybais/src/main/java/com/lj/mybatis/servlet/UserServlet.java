@@ -1,5 +1,5 @@
 package com.lj.mybatis.servlet;
 
-public class UserServlet implements Http {
+public class UserServlet{
 
 }
