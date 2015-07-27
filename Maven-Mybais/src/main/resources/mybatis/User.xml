@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<!--Mapper元素 只有一个属性namespace，它有两个作用：
+	<!--
+	Mapper元素 只有一个属性namespace，它有两个作用：
 	一、是用于区分不同的mapper（在不同的mapper文件里，子元素的id可以相同，mybatis通过namespace和子元素的id联合区分），
 	二、是与接口关联（应用程序通过接口访问mybatis时，mybatis通过接口的完整名称查找对应的mapper配置，
 		因此namespace的命名务必小心一定要某接口同名） 
 	-->
 	<mapper namespace="com.lj.mybatis.models.UserMapper">
-		<resultMap type="userResultMap" id="User">
+		<!-- 
+		resultMap提供了从数据库表列名到java对象属性的映射管理
+		不同的resultMap用id加以区分。
+		1、type属性标记java类型（别名）。
+		2、子元素中的property指带java中的属性，
+		3、column指带数据库表的列名。
+		
+		 -->
+		<resultMap id="User" type="userResultMap" >
 			<id     property="id" column="id" javaType="int"/>
 			<result property="userName" column="username" javaType="String"/>
 			<result property="password" column="password" javaType="String"/>
@@ -15,13 +24,54 @@
 			<result property=""/>
 		</resultMap>
 	
-	
-	
-	
-	
-	
-	
-	    <select id="selectUserByID" parameterType="int" resultType="User">
-	        select * from `user` where id = #{id}
+		<!--
+		id:在命名空间中唯一的标识符，可以被用来引用这条语句。同样，id+namespace既作为configuration中缓存的key又与namespace对应的接口中的方法关联。
+		parameterType:将会传入这条语句的参数类的完全限定名或别名。
+		resultType:从这条语句中返回的期望类型的类的完全限定名或别名
+		resultMap:引用外部的resultMap
+		flushCache:将其设置为true，不论语句什么时候被调用，都会导致缓存被清空。默认值：false。
+		useCache:将其设置为true，将会导致本条语句的结果被缓存。默认值：true。
+		  -->
+	    <select id="selectUserByID" parameterType="int" resultType="User" useCache="false">
+	        select * from user where id = #{id}
 	    </select>
+	    <!-- 执行增加操作的SQL语句。id和parameterType  
+		       分别与IUserOperation接口中的addUser方法的名字和  
+		       参数类型一致。以#{name}的形式引用Student参数  
+		       的name属性，MyBatis将使用反射读取Student参数  
+		       的此属性。#{name}中name大小写敏感。引用其他  
+		       的gender等属性与此一致。seGeneratedKeys设置  
+		       为"true"表明要MyBatis获取由数据库自动生成的主  
+		       键；keyProperty="id"指定把获取到的主键值注入  
+		       到Student的id属性 
+		 -->
+	    <insert id="insertUser" parameterType="userResultMap" useGeneratedKeys="true" keyProperty="id" >
+	    	insert  into user(username,password,userage,useraddress) values(#{userName},#{password},#{userAge},#{userAddress})
+	    </insert>
+	    <!-- 修改用户密码 -->
+	    <update id="updatePassword" parameterType="" >
+	    	update user set password=#{password} where id=#{id}
+	    </update>
+	    <delete id="deleteUser">
+	    	delete from user where id=#{id}
+	    </delete>
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	</mapper>

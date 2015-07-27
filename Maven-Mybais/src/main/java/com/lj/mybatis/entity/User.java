@@ -10,6 +10,7 @@ public class User {
     private String password;
     private int userAge;
     private String userAddress;
+    private int dr;//校验是否删除 1、为删除  0、正常
 	public int getId() {
 		return id;
 	}
@@ -39,6 +40,12 @@ public class User {
 	}
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
+	}
+	public int getDr() {
+		return dr;
+	}
+	public void setDr(int dr) {
+		this.dr = dr;
 	}
     
     
