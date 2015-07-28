@@ -5,7 +5,7 @@ import java.util.List;
 import com.lj.mybatis.entity.User;
 import com.lj.mybatis.service.UserService;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl  {
 
 	public void addUser(User user) {
 		// TODO Auto-generated method stub

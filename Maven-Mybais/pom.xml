@@ -1,33 +1,185 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  
+  <!--
+  1、groupId:项目或者组织的唯一标志，并且配置时生成路径也是由此生成，如org.myproject.mojo生成的相对路径为：/org/myproject/mojo 
+  2、artifactId:项目的通用名称
+  3、packaging:打包机制，如pom,jar,maven-plugin,ejb,war,ear,rar,par
+  4、version:项目的版本
+  5、name:用户描述项目的名称，无关紧要的东西，可选
+  6、url:应该是只是写明开发团队的网站，无关紧要，可选
+  	
+  	其中groupId,artifactId,version,packaging这四项组成了项目的唯一坐标。一般情况下，前面三项就可以组成项目的唯一坐标了。
+  -->
   <groupId>com.lj.mvn.account</groupId>
   <artifactId>Maven-Mybais</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Maven-Mybais Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <!-- 
+  	properties:是为pom定义一些常量，在pom中的其它地方可以直接引用。
+   -->
+  <properties>
+  		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.1.4.RELEASE</spring.version>
+		<mybatis.version>3.1.1</mybatis.version>
+		<jackson.version>2.5.0</jackson.version> 
+  </properties>
+  
+  
   <dependencies>
+  	<!--Junit  -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <!--mybatis jar包  -->
+    <!-- Spring jar文件 -->
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-core</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>   
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-beans</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>   
+     <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+     <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-tx</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-web</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-webmvc</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-jdbc</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-test</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    
+    
+    <!--mybatis jar文件  -->
     <dependency>  
 	   <groupId>org.mybatis</groupId>  
 	   <artifactId>mybatis</artifactId>  
-	   <version>3.1.1</version>  
+	   <version>${mybatis.version}</version>  
  	</dependency>  
+ 	
+ 	<!--mybatis spring 插件  -->
+    <dependency>  
+	   <groupId>org.mybatis</groupId>  
+	   <artifactId>mybatis-spring</artifactId>  
+	   <version>1.2.2</version>  
+ 	</dependency> 
+ 	
+ 	<!-- mysql连接 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.22</version>
+	</dependency>
     
+    <!-- log4j -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
+
+	<!-- servlet -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<version>3.0-alpha-1</version>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	</dependency>
     
-    
-    
-    
-    
+    <!-- json -->
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.9.13</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.2.3</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-annotations</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-core</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
   </dependencies>
+  
+  
+  <!-- 
+  build设置:
+  1、finalName:指定去掉后缀的工程名字，例如：默认为${artifactId}-${version}
+   -->
   <build>
     <finalName>Maven-Mybais</finalName>
   </build>
 </project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

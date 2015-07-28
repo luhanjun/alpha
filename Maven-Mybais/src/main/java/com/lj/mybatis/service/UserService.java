@@ -7,25 +7,29 @@ import com.lj.mybatis.entity.User;
 public interface UserService {
 	
 	/**
-	 * 添加用户
-	 */
-	public void addUser(int id,String username,String password);
-	/**
-	 * 修改用户
-	 */
-	public int updateUser(int id,String username,String password);
-	/**
-	 * 根据用户ID删除用户
-	 */
-	public void deleteUser(int id);
-	/**
 	 * 根据用户ID获取用户
 	 */
-	public User getUserByID(int id);
+	public User selectUserByID(int id);
 	/**
-	 * 获取所有用户
+	 * 获取r所有用户
 	 */
-	public List<User> getAllUsers();
+	public List<User> selectAllUser();
+	
+	/**
+	 * 添加用户
+	 */
+	public void insertUser(User user);
+	/**
+	 * 修改用户密码
+	 */
+	public void updatePassword(User user);
+	
+	/**
+	 * 删除用户
+	 */
+	public void deleteUserByID(int id);
+	
+	
 	/**
 	 * 分页获取用户,
 	 */
