@@ -7,7 +7,7 @@
 	二、是与接口关联（应用程序通过接口访问mybatis时，mybatis通过接口的完整名称查找对应的mapper配置，
 		因此namespace的命名务必小心一定要某接口同名） 
 	-->
-	<mapper namespace="com.lj.mybatis.service.UserDao">
+	<mapper namespace="com.lj.mybatis.service.UserService">
 		<!-- 
 		resultMap提供了从数据库表列名到java对象属性的映射管理
 		不同的resultMap用id加以区分。
@@ -16,12 +16,13 @@
 		3、column指带数据库表的列名。
 		
 		 -->
-		<resultMap id="User" type="userResultMap" >
+		<resultMap id="userResultMap" type="com.lj.mybatis.entity.User"  >
 			<id     property="id" column="id" javaType="int"/>
 			<result property="userName" column="username" javaType="String"/>
 			<result property="password" column="password" javaType="String"/>
+			<result property="userage" column="userage" javaType="int"/>
 			<result property="email" column="email" javaType="String"/>
-			<result property=""/>
+			<result property="dr" column="dr" javaType="int"/>
 		</resultMap>
 	
 		<!--
@@ -32,12 +33,12 @@
 		flushCache:将其设置为true，不论语句什么时候被调用，都会导致缓存被清空。默认值：false。
 		useCache:将其设置为true，将会导致本条语句的结果被缓存。默认值：true。
 		  -->
-	    <select id="selectUserByID" parameterType="int" resultType="userResultMap" useCache="false">
-	        select * from user where id = #{id} 
+	    <select id="selectUserByID" parameterType="int" resultMap="userResultMap" useCache="false">
+	        select * from users where id = #{id} 
 	    </select>
 	    
 	    <select id="selectAllUser" resultMap="userResultMap" >
-	    	select * from user
+	    	select * from users
 	    </select>
 	    
 	    
@@ -51,15 +52,15 @@
 		       键；keyProperty="id"指定把获取到的主键值注入  
 		       到Student的id属性 
 		 -->
-	    <insert id="insertUser" parameterType="userResultMap" useGeneratedKeys="true" keyProperty="id" >
-	    	insert  into user(username,password,userage,useraddress) values(#{userName},#{password},#{userAge},#{userAddress})
+	    <insert id="insertUser" parameterMap="userResultMap" useGeneratedKeys="true" keyProperty="id" >
+	    	insert  into users(username,password,userage,useraddress) values(#{userName},#{password},#{userAge},#{userAddress})
 	    </insert>
 	    <!-- 修改用户密码 -->
-	    <update id="updatePassword" parameterType="userResultMap" >
-	    	update user set password=#{password} where id=#{id}
+	    <update id="updatePassword" parameterMap="userResultMap" >
+	    	update users set password=#{password} where id=#{id}
 	    </update>
-	    <delete id="deleteUserByID" parameterType="userResultMap" >
-	    	delete from user where id=#{id}
+	    <delete id="deleteUserByID" parameterMap="userResultMap" >
+	    	delete from users where id=#{id}
 	    </delete>
 	    
 	    

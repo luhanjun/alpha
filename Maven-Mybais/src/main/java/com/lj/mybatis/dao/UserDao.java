@@ -11,6 +11,11 @@ import com.lj.mybatis.service.UserService;
 import com.lj.mybatis.utils.MySqlSessionFactory;
 
 public class UserDao {
+	/**
+	 * 根据ID获取用户
+	 * @param id
+	 * @return
+	 */
 	public User selectUserByID(int id){
 		User user=new User();
 		SqlSessionFactory sqlsessionFactory=MySqlSessionFactory.getInstance().getSqlSessionFactory();

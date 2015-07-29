@@ -25,10 +25,10 @@ public class MySqlSessionFactory {
 	        }  
 	        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 	        // 注解方式查询时需要注册mapper  
-	        sqlSessionFactory.getConfiguration().addMapper(UserService.class);		
+//	        sqlSessionFactory.getConfiguration().addMapper(UserService.class);		
 	}
 	public static MySqlSessionFactory getInstance(){
-		if(mySqlSessionFactory!=null){
+		if(mySqlSessionFactory==null){
 			mySqlSessionFactory=new MySqlSessionFactory();
 		}
 		return mySqlSessionFactory;

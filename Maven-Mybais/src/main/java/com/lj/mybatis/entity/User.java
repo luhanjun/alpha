@@ -1,4 +1,7 @@
 package com.lj.mybatis.entity;
+
+import java.util.Date;
+
 /**
  * 实体-用户类
  * @author Administrator
@@ -9,7 +12,8 @@ public class User {
     private String userName;
     private String password;
     private int userAge;
-    private String userAddress;
+    private Date birthday;
+    private String email;
     private int dr;//校验是否删除 1、为删除  0、正常
 	public int getId() {
 		return id;
@@ -35,11 +39,18 @@ public class User {
 	public void setUserAge(int userAge) {
 		this.userAge = userAge;
 	}
-	public String getUserAddress() {
-		return userAddress;
+	
+	public Date getBirthday() {
+		return birthday;
 	}
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public int getDr() {
 		return dr;
